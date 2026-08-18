@@ -2,10 +2,10 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Page en construction - Fraternité 112">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Fraternité 112 — Page en développement.">
   <meta name="theme-color" content="#131a27">
-  <title>En construction — Fraternité 112</title>
+  <title>Page en développement — Fraternité 112</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -13,101 +13,138 @@
 </head>
 <body>
 
+  <!-- Calques de fond -->
+  <div class="bg-layer"></div>
+  <div class="page-grid"></div>
   <div class="page-noise"></div>
 
-  <!-- Barre de navigation (Identique à l'accueil) -->
-  <header class="topbar">
-    <a class="brand" href="index.html" aria-label="Fraternité 112 - Accueil">
-      <span class="brand-mark">112</span>
-      <span class="brand-name">
-        <strong>FRATERNITÉ</strong>
-        <small>COMMUNAUTÉ SECOURS & SÉCURITÉ</small>
-      </span>
-    </a>
+  <!-- NAVBAR TRANSPARENTE -->
+  <header class="topbar-wrapper">
+    <div class="topbar">
+      <a class="brand" href="index.html" aria-label="Fraternité 112 - Accueil">
+        <span class="brand-mark">112</span>
+        <span class="brand-name">
+          <strong>FRATERNITÉ</strong>
+          <small>COMMUNAUTÉ SECOURS & SÉCURITÉ</small>
+        </span>
+      </a>
 
-    <div class="header-actions">
-      <div class="logo-placeholder" title="Logo Fraternité 112">
-        <img src="https://i.ibb.co/W4V5N8sC/IMG-4587.png" alt="Logo Fraternité 112">
-      </div>
+      <div class="header-actions">
+        <div class="logo-placeholder" title="Logo Fraternité 112">
+          <img src="https://i.ibb.co/W4V5N8sC/IMG-4587.png" alt="Logo Fraternité 112">
+        </div>
 
-      <input class="menu-toggle" type="checkbox" id="menu-toggle">
-      <label class="menu-button" for="menu-toggle" aria-label="Ouvrir le menu">
-        <span></span><span></span><span></span>
-      </label>
+        <input class="menu-toggle" type="checkbox" id="menu-toggle">
+        <label class="menu-button" for="menu-toggle" aria-label="Ouvrir le menu">
+          <span></span><span></span><span></span>
+        </label>
 
-      <div class="menu-backdrop"></div>
+        <div class="menu-backdrop"></div>
 
-      <aside class="side-menu" aria-label="Navigation principale">
-        <div class="menu-head">
-          <div>
-            <span class="eyebrow">NAVIGATION</span>
-            <h2>Fraternité 112</h2>
+        <aside class="side-menu" aria-label="Navigation principale">
+          <div class="menu-head">
+            <div>
+              <span class="eyebrow">NAVIGATION</span>
+              <h2>Fraternité 112</h2>
+            </div>
+            <label class="menu-close" for="menu-toggle" aria-label="Fermer le menu">×</label>
           </div>
-          <label class="menu-close" for="menu-toggle" aria-label="Fermer le menu">×</label>
-        </div>
 
-        <nav class="menu-links">
-          <a href="index.html">
-            <span class="menu-number">01</span>
-            <span><b>Accueil</b><small>Présentation du serveur</small></span>
-          </a>
-          <a href="bientot.html" class="active">
-            <span class="menu-number">02</span>
-            <span><b>La communauté</b><small>En construction</small></span>
-          </a>
-          <a href="bientot.html" class="active">
-            <span class="menu-number">03</span>
-            <span><b>Ressources</b><small>En construction</small></span>
-          </a>
-          <a href="bientot.html" class="active">
-            <span class="menu-number">04</span>
-            <span><b>Actualités</b><small>En construction</small></span>
-          </a>
-          <a href="bientot.html" class="active">
-            <span class="menu-number">05</span>
-            <span><b>Contact</b><small>En construction</small></span>
-          </a>
-        </nav>
+          <nav class="menu-links">
+            
+            <!-- 01 : SAPEURS-POMPIERS -->
+            <div class="menu-dropdown">
+              <input type="checkbox" id="sp-dropdown" hidden>
+              <label for="sp-dropdown" class="menu-item">
+                <span class="menu-number">01</span>
+                <span class="menu-text">
+                  <b>Sapeurs-Pompiers</b>
+                  <small>Ressource pédagogique</small>
+                </span>
+                <span class="dropdown-arrow">▼</span>
+              </label>
+              
+              <div class="submenu">
+                <a href="404.html">SSUAP</a>
+                <a href="404.html">INCENDIE</a>
+                <a href="404.html">SECOURS ROUTIER</a>
+              </div>
+            </div>
 
-        <div class="menu-footer">
-          <span>112 • TOUJOURS ENSEMBLE</span>
-          <span>© 2026 Fraternité 112</span>
-        </div>
-      </aside>
+            <!-- AUTRES LIENS -->
+            <a href="404.html" class="menu-item">
+              <span class="menu-number">02</span>
+              <span class="menu-text">
+                <b>La communauté</b>
+                <small>Bientôt disponible</small>
+              </span>
+            </a>
+            
+            <a href="404.html" class="menu-item">
+              <span class="menu-number">03</span>
+              <span class="menu-text">
+                <b>Ressources</b>
+                <small>Bientôt disponible</small>
+              </span>
+            </a>
+            
+            <a href="404.html" class="menu-item">
+              <span class="menu-number">04</span>
+              <span class="menu-text">
+                <b>Actualités</b>
+                <small>Bientôt disponible</small>
+              </span>
+            </a>
+            
+            <a href="404.html" class="menu-item">
+              <span class="menu-number">05</span>
+              <span class="menu-text">
+                <b>Contact</b>
+                <small>Bientôt disponible</small>
+              </span>
+            </a>
+
+          </nav>
+
+          <div class="menu-footer">
+            <span>112 • TOUJOURS ENSEMBLE</span>
+            <span>© 2026 Fraternité 112</span>
+          </div>
+        </aside>
+      </div>
     </div>
   </header>
 
-  <!-- Contenu principal centré -->
+  <!-- CONTENU PRINCIPAL -->
   <main>
-    <section class="hero" style="min-height: calc(100vh - 180px);">
+    <section class="hero">
       <div class="hero-orb hero-orb-one"></div>
       <div class="hero-orb hero-orb-two"></div>
 
       <div class="hero-copy reveal">
-        <span class="eyebrow"><i></i> EN DÉVELOPPEMENT</span>
+        <span class="eyebrow"><i></i> ACCÈS RESTREINT</span>
         <h1>
-          Cette page arrive
-          <span>très vite.</span>
+          Page en
+          <span>développement.</span>
         </h1>
         <p class="hero-text">
-          Nous construisons actuellement cet espace pour t'offrir la meilleure expérience possible. En attendant, viens discuter avec nous !
+          Cette rubrique est actuellement en cours de création. On fait au plus vite pour tout mettre en ligne !
         </p>
 
         <div class="hero-buttons">
-          <a class="btn btn-ghost" href="index.html">
-            <span class="arrow">←</span>
-            Retour à l'accueil
+          <a class="btn btn-primary" href="index.html">
+            <span>Retourner à l'accueil</span>
+            <span class="btn-icon">→</span>
           </a>
-          <a class="btn btn-primary" href="https://discord.gg/KhWHscX4Bn" target="_blank" rel="noopener">
-            <span>Rejoindre le Discord</span>
-            <span class="btn-icon">↗</span>
+          <a class="btn btn-ghost" href="https://discord.gg/KhWHscX4Bn" target="_blank" rel="noopener">
+            Rejoindre le Discord
+            <span class="arrow">↗</span>
           </a>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Pied de page -->
   <footer class="footer">
     <div>
       <strong>FRATERNITÉ 112</strong>
