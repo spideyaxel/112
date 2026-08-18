@@ -13,7 +13,7 @@
 </head>
 <body>
 
-  <!-- Calques de fond (Séparés pour éviter les lags de scroll) -->
+  <!-- Calques de fond (Optimisés) -->
   <div class="bg-layer"></div>
   <div class="page-grid"></div>
   <div class="page-noise"></div>
@@ -21,7 +21,7 @@
   <!-- NAVBAR TRANSPARENTE -->
   <header class="topbar-wrapper">
     <div class="topbar">
-      <a class="brand" href="#" aria-label="Fraternité 112 - Accueil">
+      <a class="brand" href="index.html" aria-label="Fraternité 112 - Accueil">
         <span class="brand-mark">112</span>
         <span class="brand-name">
           <strong>FRATERNITÉ</strong>
@@ -39,7 +39,6 @@
           <span></span><span></span><span></span>
         </label>
 
-        <!-- Menu Backdrop AVEC le beau flou, mais accéléré 3D -->
         <div class="menu-backdrop"></div>
 
         <aside class="side-menu" aria-label="Navigation principale">
@@ -52,26 +51,60 @@
           </div>
 
           <nav class="menu-links">
-            <a href="index.html" class="active">
-              <span class="menu-number">01</span>
-              <span><b>Accueil</b><small>Présentation du serveur</small></span>
-            </a>
-            <a href="bientot.html">
+            
+            <!-- 01 : SAPEURS-POMPIERS (AVEC MENU DÉROULANT) -->
+            <div class="menu-dropdown">
+              <input type="checkbox" id="sp-dropdown" hidden>
+              <label for="sp-dropdown" class="menu-item active">
+                <span class="menu-number">01</span>
+                <span class="menu-text">
+                  <b>Sapeurs-Pompiers</b>
+                  <small>Spécialités opérationnelles</small>
+                </span>
+                <span class="dropdown-arrow">▼</span>
+              </label>
+              
+              <!-- Les 3 sous-pages -->
+              <div class="submenu">
+                <a href="404.html">SSUAP</a>
+                <a href="404.html">INCENDIE</a>
+                <a href="404.html">SECOURS ROUTIER</a>
+              </div>
+            </div>
+
+            <!-- AUTRES LIENS (Vers 404.html pour l'instant) -->
+            <a href="404.html" class="menu-item">
               <span class="menu-number">02</span>
-              <span><b>La communauté</b><small>Bientôt disponible</small></span>
+              <span class="menu-text">
+                <b>La communauté</b>
+                <small>Bientôt disponible</small>
+              </span>
             </a>
-            <a href="bientot.html">
+            
+            <a href="404.html" class="menu-item">
               <span class="menu-number">03</span>
-              <span><b>Ressources</b><small>Bientôt disponible</small></span>
+              <span class="menu-text">
+                <b>Ressources</b>
+                <small>Bientôt disponible</small>
+              </span>
             </a>
-            <a href="bientot.html">
+            
+            <a href="404.html" class="menu-item">
               <span class="menu-number">04</span>
-              <span><b>Actualités</b><small>Bientôt disponible</small></span>
+              <span class="menu-text">
+                <b>Actualités</b>
+                <small>Bientôt disponible</small>
+              </span>
             </a>
-            <a href="bientot.html">
+            
+            <a href="404.html" class="menu-item">
               <span class="menu-number">05</span>
-              <span><b>Contact</b><small>Bientôt disponible</small></span>
+              <span class="menu-text">
+                <b>Contact</b>
+                <small>Bientôt disponible</small>
+              </span>
             </a>
+
           </nav>
 
           <div class="menu-footer">
@@ -83,7 +116,7 @@
     </div>
   </header>
 
-  <!-- CONTENU PRINCIPAL -->
+  <!-- CONTENU PRINCIPAL (Inchangé) -->
   <main>
     <section class="hero">
       <div class="hero-orb hero-orb-one"></div>
