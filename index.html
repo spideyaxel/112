@@ -13,9 +13,12 @@
 </head>
 <body>
 
+  <!-- Calques de fond (Séparés pour éviter les lags de scroll) -->
+  <div class="bg-layer"></div>
+  <div class="page-grid"></div>
   <div class="page-noise"></div>
 
-  <!-- LA NAVBAR TOUJOURS VISIBLE -->
+  <!-- NAVBAR TRANSPARENTE -->
   <header class="topbar-wrapper">
     <div class="topbar">
       <a class="brand" href="#" aria-label="Fraternité 112 - Accueil">
@@ -36,6 +39,7 @@
           <span></span><span></span><span></span>
         </label>
 
+        <!-- Menu Backdrop AVEC le beau flou, mais accéléré 3D -->
         <div class="menu-backdrop"></div>
 
         <aside class="side-menu" aria-label="Navigation principale">
@@ -150,7 +154,7 @@
       </div>
     </section>
 
-    <section class="cta-section">
+    <section class="cta-section reveal">
       <div class="cta-glow"></div>
       <div class="cta-content">
         <span class="eyebrow">PRÊT À NOUS REJOINDRE ?</span>
