@@ -20,9 +20,7 @@ html, body {
   overflow-x: hidden;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   font-family: "Inter", sans-serif;
@@ -32,9 +30,7 @@ body {
   position: relative;
 }
 
-/* --- LES CALQUES DE FOND (Beaux mais fluides) --- */
-
-/* 1. L'image de fond et le dégradé (sans background-attachment: fixed) */
+/* --- CALQUES DE FOND --- */
 .bg-layer {
   position: fixed;
   inset: 0;
@@ -42,10 +38,9 @@ body {
   background:
     linear-gradient(180deg, rgba(19, 26, 39, 0.84) 0%, rgba(13, 18, 28, 0.92) 100%),
     url("https://i.ibb.co/whCgM5wN/FB-IMG-1732656399313-Original.jpg") center/cover no-repeat;
-  transform: translateZ(0); /* Accélération GPU */
+  transform: translateZ(0);
 }
 
-/* 2. La grille (Accélérée GPU) */
 .page-grid {
   position: fixed;
   inset: 0;
@@ -60,11 +55,10 @@ body {
   transform: translateZ(0);
 }
 
-/* 3. Le bruit léger (Image base64 très petite) */
 .page-noise {
   position: fixed;
   inset: 0;
-  z-index: 9999; /* Par dessus tout mais impalpable */
+  z-index: 9999;
   pointer-events: none;
   opacity: 0.2;
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyAQMAAAAk8RryAAAABlBMVEUAAAD///+l2Z/dAAAAAWJLR0QAiAUdSAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAB3RJTUUH3wEWEygN+o4iOQAAADxJREFUKM9jYMAO/oHwgwgHGDhAwkED/tNAPPQfDFR/+A8GqoG/kEE1/hcE1PiPiAEk/A8C1Phfo4hBBADq8S7l1j6/zQAAAABJRU5ErkJggg==");
@@ -83,10 +77,7 @@ img {
   display: block;
 }
 
-/* --- Conteneurs Globaux --- */
-main {
-  padding-top: 110px; 
-}
+main { padding-top: 110px; }
 
 .cta-section, .footer {
   width: 92%;
@@ -102,7 +93,7 @@ main {
   margin-right: auto;
 }
 
-/* --- Barre de navigation (Totalement Transparente) --- */
+/* --- NAVBAR --- */
 .topbar-wrapper {
   position: fixed;
   top: 0;
@@ -175,7 +166,6 @@ main {
   padding: 4px;
   background: rgba(20, 28, 42, 0.85);
   box-shadow: var(--shadow);
-  overflow: hidden;
   transition: transform .35s ease, border-color .35s ease;
 }
 
@@ -191,10 +181,7 @@ main {
   object-fit: cover;
 }
 
-/* --- Menu Latéral Mobile --- */
-.menu-toggle {
-  display: none;
-}
+.menu-toggle { display: none; }
 
 .menu-button {
   width: 54px;
@@ -235,7 +222,7 @@ main {
   visibility: hidden;
   transition: .45s ease;
   z-index: 995;
-  transform: translateZ(0); /* Anti-lag du flou */
+  transform: translateZ(0);
 }
 
 .side-menu {
@@ -256,7 +243,7 @@ main {
   z-index: 999;
   display: flex;
   flex-direction: column;
-  transform: translateZ(0); /* Anti-lag */
+  transform: translateZ(0);
 }
 
 .menu-toggle:checked ~ .menu-backdrop {
@@ -269,15 +256,9 @@ main {
   opacity: 1;
 }
 
-.menu-toggle:checked + .menu-button span:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-.menu-toggle:checked + .menu-button span:nth-child(2) {
-  opacity: 0;
-}
-.menu-toggle:checked + .menu-button span:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
-}
+.menu-toggle:checked + .menu-button span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu-toggle:checked + .menu-button span:nth-child(2) { opacity: 0; }
+.menu-toggle:checked + .menu-button span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 .menu-head {
   display: flex;
@@ -312,30 +293,35 @@ main {
   background: rgba(230, 57, 70, 0.15);
 }
 
+/* --- LIENS ET DROPDOWN DU MENU --- */
 .menu-links {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
   margin: 30px 0;
 }
 
-.menu-links a {
+/* Format commun pour un lien simple ou un titre de menu déroulant */
+.menu-item {
   display: grid;
-  grid-template-columns: 42px 1fr;
+  grid-template-columns: 42px 1fr auto;
   gap: 13px;
   padding: 16px;
   border-radius: 16px;
   transition: .3s ease;
   border: 1px solid transparent;
+  cursor: pointer;
+  align-items: center;
 }
 
-.menu-links a:hover,
-.menu-links a.active {
+.menu-item:hover,
+.menu-item.active {
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(230, 57, 70, 0.3);
   transform: translateX(4px);
 }
 
-.menu-links a.active .menu-number {
+.menu-item.active .menu-number {
   color: var(--accent);
   font-weight: bold;
 }
@@ -343,19 +329,82 @@ main {
 .menu-number {
   color: #728198;
   font-size: .72rem;
+  align-self: flex-start;
   padding-top: 3px;
 }
 
-.menu-links b {
+.menu-text { display: block; }
+
+.menu-text b {
   display: block;
   font-family: "Manrope", sans-serif;
   font-size: .96rem;
   margin-bottom: 4px;
 }
 
-.menu-links small {
+.menu-text small {
   color: var(--muted);
   font-size: .72rem;
+}
+
+/* Spécificités du Dropdown (Sapeurs-Pompiers) */
+.menu-dropdown {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-arrow {
+  font-size: 0.7rem;
+  color: var(--muted);
+  transition: transform 0.3s ease;
+}
+
+/* Le sous-menu est caché par défaut */
+.submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 65px; /* Aligné avec le texte parent */
+  padding-right: 16px;
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease, visibility 0.4s;
+}
+
+.submenu a {
+  padding: 10px 16px;
+  border-radius: 10px;
+  color: var(--muted);
+  font-size: .85rem;
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all .3s ease;
+  border: 1px solid transparent;
+}
+
+.submenu a:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+  transform: translateX(4px);
+}
+
+/* Action : Quand le menu est cliqué (Checkbox activée) */
+#sp-dropdown:checked ~ .submenu {
+  max-height: 250px;
+  opacity: 1;
+  visibility: visible;
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+/* On tourne la flèche vers le haut et on la met en rouge */
+#sp-dropdown:checked + .menu-item .dropdown-arrow {
+  transform: rotate(180deg);
+  color: var(--accent);
 }
 
 .menu-footer {
@@ -370,7 +419,7 @@ main {
   letter-spacing: .11em;
 }
 
-/* --- Contenu Principal --- */
+/* --- HERO SECTION --- */
 .hero {
   min-height: calc(85vh - 115px);
   display: flex;
@@ -382,14 +431,12 @@ main {
   padding: 40px 0 100px;
 }
 
-/* L'astuce des halos sans "filter: blur()" : on utilise un radial-gradient. 
-   L'effet visuel est identique mais la carte graphique ne force pas. */
 .hero-orb {
   position: absolute;
   pointer-events: none;
   z-index: -1;
   border-radius: 50%;
-  transform: translateZ(0); /* Anti-lag */
+  transform: translateZ(0);
 }
 
 .hero-orb-one {
@@ -512,9 +559,7 @@ main {
   background: rgba(255, 255, 255, 0.18);
 }
 
-.arrow {
-  color: var(--muted);
-}
+.arrow { color: var(--muted); }
 
 .hero-meta {
   margin-top: 48px;
@@ -542,15 +587,10 @@ main {
   text-transform: uppercase;
 }
 
-.intro-section {
-  margin-top: 50px;
-  margin-bottom: 140px;
-}
+/* --- SECTIONS --- */
+.intro-section { margin-top: 50px; margin-bottom: 140px; }
 
-.section-heading {
-  max-width: 720px;
-}
-
+.section-heading { max-width: 720px; }
 .section-heading h2 {
   margin: 14px 0 12px;
   font-family: "Manrope", sans-serif;
@@ -558,11 +598,7 @@ main {
   line-height: 1;
   letter-spacing: -.06em;
 }
-
-.section-heading p {
-  color: var(--muted);
-  line-height: 1.75;
-}
+.section-heading p { color: var(--muted); line-height: 1.75; }
 
 .feature-grid {
   margin-top: 55px;
@@ -571,7 +607,6 @@ main {
   gap: 14px;
 }
 
-/* Glassmorphism sur les cartes + Accélération matérielle */
 .feature-card {
   min-height: 315px;
   position: relative;
@@ -583,10 +618,9 @@ main {
   -webkit-backdrop-filter: blur(14px);
   overflow: hidden;
   transition: transform .4s ease, border-color .4s ease, background .4s ease;
-  transform: translateZ(0); /* Crucial pour annuler le lag du backdrop-filter au scroll */
+  transform: translateZ(0); 
 }
 
-/* L'effet de lueur sous la carte en trompe-l'oeil (radial-gradient au lieu de filter: blur) */
 .feature-card::after {
   content: "";
   width: 250px;
@@ -600,23 +634,14 @@ main {
   pointer-events: none;
 }
 
-.feature-card > * {
-  position: relative;
-  z-index: 1;
-}
-
+.feature-card > * { position: relative; z-index: 1; }
 .feature-card:hover {
   transform: translateY(-8px) translateZ(0);
   border-color: rgba(230, 57, 70, 0.35);
   background: rgba(26, 36, 54, 0.82);
 }
 
-.feature-index {
-  color: #6a798f;
-  font-size: .66rem;
-  letter-spacing: .14em;
-}
-
+.feature-index { color: #6a798f; font-size: .66rem; letter-spacing: .14em; }
 .feature-icon {
   width: 50px;
   height: 50px;
@@ -630,19 +655,9 @@ main {
   border: 1px solid rgba(230, 57, 70, 0.25);
 }
 
-.feature-card h3 {
-  font-family: "Manrope", sans-serif;
-  font-size: 1.25rem;
-  margin-bottom: 10px;
-}
+.feature-card h3 { font-family: "Manrope", sans-serif; font-size: 1.25rem; margin-bottom: 10px; }
+.feature-card p { color: var(--muted); font-size: .84rem; line-height: 1.7; }
 
-.feature-card p {
-  color: var(--muted);
-  font-size: .84rem;
-  line-height: 1.7;
-}
-
-/* Section CTA avec Glassmorphism accéléré */
 .cta-section {
   margin-bottom: 90px;
   min-height: 420px;
@@ -659,7 +674,6 @@ main {
   transform: translateZ(0);
 }
 
-/* Lueur CTA simulée en radial gradient */
 .cta-glow {
   position: absolute;
   width: 600px;
@@ -668,28 +682,15 @@ main {
   pointer-events: none;
 }
 
-.cta-content {
-  position: relative;
-  z-index: 2;
-  padding: 40px 20px;
-}
-
+.cta-content { position: relative; z-index: 2; padding: 40px 20px; }
 .cta-content h2 {
   margin: 17px 0 12px;
   font-family: "Manrope", sans-serif;
   font-size: clamp(2.3rem, 4vw, 4.2rem);
   letter-spacing: -.06em;
 }
-
-.cta-content p {
-  color: var(--muted);
-  margin-bottom: 30px;
-}
-
-.btn.large {
-  min-height: 58px;
-  padding-inline: 24px;
-}
+.cta-content p { color: var(--muted); margin-bottom: 30px; }
+.btn.large { min-height: 58px; padding-inline: 24px; }
 
 .footer {
   padding: 25px 0 38px;
@@ -701,46 +702,20 @@ main {
   font-size: .72rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
+.footer div:first-child { display: grid; gap: 5px; }
+.footer strong { color: #dbe2ed; letter-spacing: .10em; font-size: .68rem; }
+.footer-right { display: flex; gap: 20px; align-items: center; }
 
-.footer div:first-child {
-  display: grid;
-  gap: 5px;
-}
-
-.footer strong {
-  color: #dbe2ed;
-  letter-spacing: .10em;
-  font-size: .68rem;
-}
-
-.footer-right {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
-
-.reveal {
-  animation: revealUp .85s cubic-bezier(.22,1,.36,1) both;
-}
-
+.reveal { animation: revealUp .85s cubic-bezier(.22,1,.36,1) both; }
 .delay-1 { animation-delay: .12s; }
 .delay-2 { animation-delay: .24s; }
 
 @keyframes revealUp {
-  from {
-    opacity: 0;
-    transform: translateY(22px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* ========================================= */
-/* ADAPTATIONS RESPONSIVE (MOBILE & TABLETTE) */
-/* ========================================= */
-
+/* --- RESPONSIVE --- */
 @media (max-width: 1050px) {
   .hero { padding-top: 20px; }
   .feature-card { min-height: 250px; }
@@ -750,58 +725,26 @@ main {
 @media (max-width: 768px) {
   main { padding-top: 90px; }
   .topbar { min-height: 70px; }
-  
   .brand-name small { display: none; }
   .brand-name strong { font-size: .75rem; }
 
-  .logo-placeholder,
-  .menu-button {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-  }
+  .logo-placeholder, .menu-button { width: 48px; height: 48px; border-radius: 14px; }
 
-  .hero {
-    min-height: auto;
-    padding: 30px 0 70px;
-  }
-
+  .hero { min-height: auto; padding: 30px 0 70px; }
   .hero-text { font-size: .95rem; }
-
-  .hero-buttons {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
+  .hero-buttons { flex-direction: column; align-items: stretch; }
   .btn { width: 100%; }
 
-  .hero-meta {
-    gap: 15px;
-    justify-content: center;
-    text-align: center;
-  }
+  .hero-meta { gap: 15px; justify-content: center; text-align: center; }
 
   .intro-section { margin-bottom: 90px; }
-  
   .feature-card { min-height: auto; padding-bottom: 40px; }
 
-  .cta-section {
-    min-height: 360px;
-    border-radius: 24px;
-  }
+  .cta-section { min-height: 360px; border-radius: 24px; }
 
-  .footer {
-    flex-direction: column;
-    text-align: center;
-    gap: 15px;
-  }
-
+  .footer { flex-direction: column; text-align: center; gap: 15px; }
   .footer div:first-child { align-items: center; }
-  
-  .footer-right {
-    flex-direction: column;
-    gap: 10px;
-  }
+  .footer-right { flex-direction: column; gap: 10px; }
 
   .side-menu {
     top: 10px;
