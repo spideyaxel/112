@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin — Actualités</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b0f19;
+    color: white;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+h1 {
+    margin-bottom: 30px;
+}
+
+.card {
+    background: #161b2e;
+    border: 1px solid #252b40;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 7px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 13px;
+    border-radius: 10px;
+    border: 1px solid #30374f;
+    background: #0f1424;
+    color: white;
+}
+
+textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+button {
+    margin-top: 20px;
+    padding: 13px 18px;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.publish {
+    background: #6d5ef8;
+    color: white;
+}
+
+.delete {
+    background: #d33;
+    color: white;
+    margin-top: 10px;
+}
+
+.article {
+    border-top: 1px solid #30374f;
+    padding: 15px 0;
+}
+
+.status {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 10px;
+    background: #0f1424;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📰 Administration des actualités</h1>
+
+    <div class="card">
+
+        <h2>Nouvelle actualité</h2>
+
+        <label>Titre</label>
+        <input id="title" type="text" placeholder="Titre de l'actualité">
+
+        <label>Description</label>
+        <textarea id="description"
+        placeholder="Description de l'actualité"></textarea>
+
+        <label>Image</label>
+        <input id="image" type="url"
+        placeholder="https://...">
+
+        <label>Catégorie</label>
+        <select id="category">
+            <option value="Actualité">Actualité</option>
+            <option value="Annonce">Annonce</option>
+            <option value="Événement">Événement</option>
+            <option value="Important">Important</option>
+        </select>
+
+        <label>Date</label>
+        <input id="date" type="date">
+
+        <button class="publish" onclick="addArticle()">
+            Publier l'actualité
+        </button>
+
+        <div id="status" class="status">
+            Prêt.
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Actualités publiées</h2>
+
+        <div id="articles">
+            Chargement...
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* ==============================
+   CONFIGURATION
+============================== */
+
+const GITHUB_USER = "spideyaxel";
+const GITHUB_REPO = "112";
+const GITHUB_BRANCH = "main";
+const FILE_PATH = "actualites.json";
+
+/*
+   POUR TON USAGE PERSONNEL UNIQUEMENT.
+
+   NE PUBLIE PAS CE FICHIER AVEC TON TOKEN.
+*/
+const GITHUB_TOKEN = "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";
+
+
+/* ==============================
+   GITHUB
+============================== */
+
+async function getFile() {
+
+    const url =
+        `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${FILE_PATH}?ref=${GITHUB_BRANCH}`;
+
+    const response = await fetch(url, {
+        headers: {
+            "Authorization": `Bearer ${GITHUB_TOKEN}`,
+            "Accept": "application/vnd.github+json"
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error("Impossible de récupérer actualites.json");
+    }
+
+    return await response.json();
+}
+
+
+/* ==============================
+   CHARGER LES ARTICLES
+============================== */
+
+async function loadArticles() {
+
+    try {
+
+        const file = await getFile();
+
+        const content = decodeURIComponent(
+            escape(
+                atob(file.content.replace(/\n/g, ""))
+            )
+        );
+
+        const data = JSON.parse(content);
+
+        displayArticles(data.articles || []);
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById("articles").innerHTML =
+            "<p>Erreur de chargement.</p>";
+    }
+}
+
+
+/* ==============================
+   AFFICHAGE
+============================== */
+
+function displayArticles(articles) {
+
+    const container =
+        document.getElementById("articles");
+
+    if (!articles.length) {
+
+        container.innerHTML =
+            "<p>Aucune actualité.</p>";
+
+        return;
+    }
+
+    container.innerHTML = "";
+
+    articles.forEach(article => {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "article";
+
+        div.innerHTML = `
+            <h3>${escapeHTML(article.title)}</h3>
+
+            <p>
+                ${escapeHTML(article.description)}
+            </p>
+
+            <small>
+                ${article.category || ""}
+                —
+                ${article.date || ""}
+            </small>
+
+            <br>
+
+            <button
+                class="delete"
+                onclick="deleteArticle('${article.id}')">
+                Supprimer
+            </button>
+        `;
+
+        container.appendChild(div);
+
+    });
+}
+
+
+/* ==============================
+   AJOUTER
+============================== */
+
+async function addArticle() {
+
+    const title =
+        document.getElementById("title").value.trim();
+
+    const description =
+        document.getElementById("description").value.trim();
+
+    const image =
+        document.getElementById("image").value.trim();
+
+    const category =
+        document.getElementById("category").value;
+
+    const date =
+        document.getElementById("date").value;
+
+
+    if (!title || !description) {
+
+        setStatus(
+            "❌ Le titre et la description sont obligatoires."
+        );
+
+        return;
+    }
+
+
+    try {
+
+        setStatus("⏳ Publication...");
+
+
+        const file = await getFile();
+
+        const content = decodeURIComponent(
+            escape(
+                atob(file.content.replace(/\n/g, ""))
+            )
+        );
+
+        const data = JSON.parse(content);
+
+
+        if (!data.articles) {
+            data.articles = [];
+        }
+
+
+        const article = {
+
+            id: Date.now(),
+
+            title: title,
+
+            description: description,
+
+            image: image,
+
+            category: category,
+
+            date: date ||
+                new Date().toISOString().split("T")[0]
+
+        };
+
+
+        data.articles.unshift(article);
+
+
+        await updateGitHubFile(
+            data,
+            file.sha
+        );
+
+
+        setStatus(
+            "✅ Actualité publiée sur GitHub !"
+        );
+
+
+        document.getElementById("title").value = "";
+        document.getElementById("description").value = "";
+        document.getElementById("image").value = "";
+
+        loadArticles();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        setStatus(
+            "❌ Erreur : " + error.message
+        );
+    }
+}
+
+
+/* ==============================
+   MODIFIER GITHUB
+============================== */
+
+async function updateGitHubFile(data, sha) {
+
+    const json = JSON.stringify(
+        data,
+        null,
+        2
+    );
+
+
+    const encoded = btoa(
+        unescape(
+            encodeURIComponent(json)
+        )
+    );
+
+
+    const url =
+        `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${FILE_PATH}`;
+
+
+    const response = await fetch(url, {
+
+        method: "PUT",
+
+        headers: {
+
+            "Authorization":
+                `Bearer ${GITHUB_TOKEN}`,
+
+            "Accept":
+                "application/vnd.github+json",
+
+            "Content-Type":
+                "application/json"
+
+        },
+
+        body: JSON.stringify({
+
+            message:
+                "Ajout d'une actualité",
+
+            content:
+                encoded,
+
+            sha:
+                sha,
+
+            branch:
+                GITHUB_BRANCH
+
+        })
+
+    });
+
+
+    if (!response.ok) {
+
+        const error =
+            await response.json();
+
+        throw new Error(
+            error.message ||
+            "Erreur GitHub"
+        );
+    }
+}
+
+
+/* ==============================
+   SUPPRIMER
+============================== */
+
+async function deleteArticle(id) {
+
+    if (!confirm(
+        "Supprimer cette actualité ?"
+    )) {
+        return;
+    }
+
+
+    try {
+
+        setStatus("⏳ Suppression...");
+
+
+        const file = await getFile();
+
+        const content = decodeURIComponent(
+            escape(
+                atob(file.content.replace(/\n/g, ""))
+            )
+        );
+
+        const data = JSON.parse(content);
+
+
+        data.articles =
+            data.articles.filter(
+                article =>
+                    String(article.id) !== String(id)
+            );
+
+
+        await updateGitHubFile(
+            data,
+            file.sha
+        );
+
+
+        setStatus(
+            "✅ Actualité supprimée."
+        );
+
+
+        loadArticles();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        setStatus(
+            "❌ " + error.message
+        );
+    }
+}
+
+
+/* ==============================
+   UTILITAIRES
+============================== */
+
+function setStatus(message) {
+
+    document.getElementById("status")
+        .textContent = message;
+}
+
+
+function escapeHTML(text) {
+
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* ==============================
+   INITIALISATION
+============================== */
+
+loadArticles();
+
+</script>
+
+</body>
+</html>
