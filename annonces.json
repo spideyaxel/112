@@ -1,12 +1,3 @@
 {
-  "annonces": [
-    {
-      "id": 1787330569076,
-      "title": "Ceci est un test",
-      "description": "Sinvous voyez ce message c'est que ça fonctionne bien et que c'est cool",
-      "image": "",
-      "category": "Annonce",
-      "date": "2026-08-21"
-    }
-  ]
+  "annonces": []
 }
