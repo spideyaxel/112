@@ -1,12 +1,3 @@
 {
-  "annonces": [
-    {
-      "id": 1787332680319,
-      "title": "Fdfd",
-      "description": "Fegd",
-      "image": "",
-      "category": "Annonce",
-      "date": "2026-08-21"
-    }
-  ]
+  "annonces": []
 }
