@@ -860,14 +860,16 @@ const GITHUB_BRANCH = "main";
 const FILE_PATH = "actualites.json";
 
 /*
-   COLLE TON NOUVEAU TOKEN ICI.
-
-   IMPORTANT :
-   - Token avec permission Contents: Read and write
-   - Repository access : uniquement spideyaxel/112
+   Le token GitHub n'est plus ici : il vit uniquement sur Netlify.
+   admin.html appelle la fonction proxy, qui elle seule connaît le token.
 */
 
-const GITHUB_TOKEN = "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";
+const PROXY_URL = "https://imaginative-smakager-4982f6.netlify.app/.netlify/functions/github-proxy";
+
+// ⚠️ IMPORTANT : ce mot de passe doit être EXACTEMENT le même
+// que celui écrit dans ADMIN_PASSWORD sur github-proxy.js (côté Netlify).
+// Change-le des deux côtés avant de mettre le site en ligne.
+const ADMIN_PASSWORD = "MonMotDePasse2026!";
 
 
 /* =========================================================
@@ -921,38 +923,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function getGitHubFile() {
 
-    if (
-        !GITHUB_TOKEN ||
-        GITHUB_TOKEN === "COLLE_TON_NOUVEAU_TOKEN_ICI"
-    ) {
-        throw new Error(
-            "Token GitHub manquant dans admin.html."
-        );
-    }
-
-
-    const url =
-        `https://api.github.com/repos/` +
-        `${GITHUB_USER}/${GITHUB_REPO}/contents/` +
-        `${FILE_PATH}?ref=${GITHUB_BRANCH}`;
-
-
     const response =
-        await fetch(url, {
+        await fetch(PROXY_URL, {
 
             method: "GET",
 
             headers: {
-
-                "Authorization":
-                    `Bearer ${GITHUB_TOKEN}`,
-
-                "Accept":
-                    "application/vnd.github+json",
-
-                "X-GitHub-Api-Version":
-                    "2022-11-28"
-
+                "X-Admin-Password": ADMIN_PASSWORD
             }
 
         });
@@ -1197,31 +1174,14 @@ async function updateGitHubFile(
         );
 
 
-    const url =
-        `https://api.github.com/repos/` +
-        `${GITHUB_USER}/${GITHUB_REPO}/contents/` +
-        `${FILE_PATH}`;
-
-
     const response =
-        await fetch(url, {
+        await fetch(PROXY_URL, {
 
             method: "PUT",
 
             headers: {
-
-                "Authorization":
-                    `Bearer ${GITHUB_TOKEN}`,
-
-                "Accept":
-                    "application/vnd.github+json",
-
-                "Content-Type":
-                    "application/json",
-
-                "X-GitHub-Api-Version":
-                    "2022-11-28"
-
+                "Content-Type": "application/json",
+                "X-Admin-Password": ADMIN_PASSWORD
             },
 
             body:
@@ -1234,10 +1194,7 @@ async function updateGitHubFile(
                         encoded,
 
                     sha:
-                        sha,
-
-                    branch:
-                        GITHUB_BRANCH
+                        sha
 
                 })
 
