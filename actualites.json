@@ -1,12 +1,3 @@
 {
-  "articles": [
-    {
-      "id": 1787314473390,
-      "title": "Test",
-      "description": "Tetdteg",
-      "image": "",
-      "category": "Actualité",
-      "date": "2026-08-21"
-    }
-  ]
+  "articles": []
 }
